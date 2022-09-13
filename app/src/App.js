@@ -17,6 +17,7 @@ function App() {
                 setProduto(data);
             });
     }
+
     function createProduto() {
         let nome = prompt('Digite o nome do produto');
         let valor = prompt('Digite o valor do produto');
@@ -29,15 +30,9 @@ function App() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({nome, valor, emEstoque, fornecedor}),
-        })
-            .then(response => {
-                return response.text();
-            })
-            .then(data => {
-                alert(data);
-                getProduto();
-            });
+        }).then(a => console.log(a))
     }
+
     function deleteProduto() {
         let id = prompt('Digite o ID do produto');
         fetch(`http://localhost:3001/produto/${id}`, {

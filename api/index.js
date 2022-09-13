@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3001
 
-const merchant_model = require('./model')
+const model = require('./model')
 
 app.use(express.json())
 app.use(function (req, res, next) {
@@ -13,7 +13,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-    merchant_model.getProduto()
+    model.getProduto()
         .then(response => {
             res.status(200).send(response);
         })
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/produto', (req, res) => {
-    merchant_model.createProduto(req.body)
+    model.createProduto(req.body)
         .then(response => {
             res.status(200).send(response);
         })
@@ -32,8 +32,8 @@ app.post('/produto', (req, res) => {
         })
 })
 
-app.delete('/produto/:produto_id', (req, res) => {
-    merchant_model.deleteProduto(req.params.id)
+app.delete('/produto/:id', (req, res) => {
+    model.deleteProduto(req.params.id)
         .then(response => {
             res.status(200).send(response);
         })
@@ -41,6 +41,7 @@ app.delete('/produto/:produto_id', (req, res) => {
             res.status(500).send(error);
         })
 })
+
 app.listen(port, () => {
     console.log(`Api rodando na porta: ${port}.`)
 })

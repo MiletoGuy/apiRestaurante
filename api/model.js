@@ -9,11 +9,11 @@ const pool = new Pool({
 
 const getProduto = () => {
     return new Promise(function(resolve, reject) {
-        pool.query('SELECT * FROM produto ORDER BY produto_id ASC', (error, results) => {
+        pool.query('SELECT * FROM produto ORDER BY produto_id ASC', (error, result) => {
             if (error) {
                 reject(error)
             }
-            resolve(results.rows);
+            resolve(result);
         })
     })
 }
@@ -21,11 +21,11 @@ const getProduto = () => {
 const createProduto = (body) => {
     return new Promise(function(resolve, reject) {
         const { nome, valor, emEstoque, fornecedor } = body
-        pool.query('INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ($1, $2, $3, $4) RETURNING *', [nome, valor, emEstoque, fornecedor], (error, results) => {
+        pool.query('INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ($1, $2, $3, $4) RETURNING *', [nome, valor, emEstoque, fornecedor], (error, result) => {
             if (error) {
                 reject(error)
             }
-            resolve(`Um novo produto foi adicionado: ${results.rows[0]}`)
+            resolve(result.rows[0])
         })
     })
 }

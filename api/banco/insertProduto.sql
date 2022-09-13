@@ -1,0 +1,1 @@
+INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ('Maçã', '3.5', 15, 1);
