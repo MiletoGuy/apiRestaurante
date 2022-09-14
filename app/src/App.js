@@ -30,13 +30,15 @@ function App() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({nome, valor, emEstoque, fornecedor}),
-        }).then(a => console.log(a))
+        }).then(response => {
+            response.text()
+        })
     }
 
     function deleteProduto() {
         let id = prompt('Digite o ID do produto');
         fetch(`http://localhost:3001/produto/${id}`, {
-            method: 'DELETE',
+            method: 'DELETE'
         })
             .then(response => {
                 return response.text();
@@ -47,11 +49,19 @@ function App() {
             });
     }
 
+    function selectTeste() {
+        fetch(`http://localhost:3001`).then(response => {
+            console.log(response)
+            }
+        )
+    }
+
     return (
     <div className="App">
       <header className="App-header">
        <button onClick={createProduto}>Novo Produto</button>
        <button onClick={deleteProduto}>Deletar Produto</button>
+       <button onClick={selectTeste}>Select teste</button>
       </header>
     </div>
   );

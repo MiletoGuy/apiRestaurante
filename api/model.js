@@ -9,7 +9,7 @@ const pool = new Pool({
 
 const getProduto = () => {
     return new Promise(function(resolve, reject) {
-        pool.query('SELECT * FROM produto ORDER BY produto_id ASC', (error, result) => {
+        pool.query('SELECT * FROM produto ORDER BY id ASC', (error, result) => {
             if (error) {
                 reject(error)
             }
@@ -33,7 +33,7 @@ const createProduto = (body) => {
 const deleteProduto = () => {
     return new Promise(function(resolve, reject) {
         const id = parseInt(request.params.id)
-        pool.query('DELETE FROM produto WHERE produto_id = $1', [id], (error, results) => {
+        pool.query('DELETE FROM produto WHERE id = $1', [id], (error, results) => {
             if (error) {
                 reject(error)
             }
@@ -45,5 +45,5 @@ const deleteProduto = () => {
 module.exports = {
     getProduto,
     createProduto,
-    deleteProduto,
+    deleteProduto
 }
