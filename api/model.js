@@ -7,15 +7,14 @@ const pool = new Pool({
     port: 5432,
 });
 
-// const getProduto = () => {
-//     return new Promise(function(resolve, reject) {
-//         pool.query('SELECT * FROM produto ORDER BY id ASC RETURNING *', (error, result) => {
-//             if (error) {
-//                 reject(error)
-//             }
-//         })
-//     })
-// }
+const selectProduto = (produto_id) => {
+   pool.query('SELECT * FROM produto WHERE id = $1', [produto_id], (err,result) => {
+       if (err) {
+           return console.error('Erro na query', err.stack)
+       }
+       return result
+   })
+}
 
 const getProduto = () => {
     return new Promise(function (resolve, reject) {
