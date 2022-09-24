@@ -1,14 +1,21 @@
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 function App() {
+    const [produto, setProduto] = useState(false);
+
+    useEffect(() => {
+        getProduto();
+    }, []);
 
     function getProduto() {
-        fetch('http://localhost:3001/produto')
+        fetch('http://localhost:3001')
             .then(response => {
-                console.log(response)
-                console.log(response.json())
-                console.log(JSON.stringify(response))
+                return response.text();
             })
+            .then(data => {
+                setProduto(data);
+            });
     }
 
     function createProduto() {
@@ -42,12 +49,19 @@ function App() {
             });
     }
 
+    function selectTeste() {
+        fetch(`http://localhost:3001`).then(response => {
+            console.log(response)
+            }
+        )
+    }
+
     return (
     <div className="App">
       <header className="App-header">
        <button onClick={createProduto}>Novo Produto</button>
        <button onClick={deleteProduto}>Deletar Produto</button>
-       <button onClick={getProduto}>Select teste</button>
+       <button onClick={selectTeste}>Select teste</button>
       </header>
     </div>
   );

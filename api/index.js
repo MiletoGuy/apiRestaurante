@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const model = require('./model')
+// const model = require('./model')
 const morgan = require('morgan')
 
 const rotaProdutos = require('./routes/produtos')
