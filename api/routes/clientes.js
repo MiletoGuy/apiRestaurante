@@ -11,7 +11,7 @@ const pool = new Pool({
 
 router.get('/', (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
-        pool.query('SELECT * FROM produto', [], (error, result) => {
+        pool.query('SELECT * FROM cliente', [], (error, result) => {
             if (error) {
                 console.log("erro")
                 reject("Ocorreu um erro!", error)
@@ -24,17 +24,17 @@ router.get('/', (req, res, next) => {
     promise.then(result => {
         const response = {
             quantidade: result.rowCount,
-            produtos: result.rows.map(prod => {
+            clientes: result.rows.map(prod => {
                 return {
                     id: prod.id,
                     nome: prod.nome,
-                    valor: prod.valor,
-                    emEstoque: prod.emEstoque,
-                    fornecedor: prod.fornecedor,
+                    email: prod.email,
+                    cpf: prod.cpf,
+                    telefone: prod.telefone,
                     request: {
                         tipo: 'GET',
-                        descricao: 'Trás todos os produtos',
-                        url: 'http://localhost:3001/produtos/' + prod.id
+                        descricao: 'Trás todos os clientes',
+                        url: 'http://localhost:3001/clientes/' + prod.id
                     }
                 }
             })
@@ -50,10 +50,10 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const nome = req.body.nome
-        const valor = req.body.valor
-        const emEstoque = req.body.emEstoque
-        const fornecedor = req.body.fornecedor
-        pool.query('INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ($1, $2, $3, $4) RETURNING *', [nome, valor, emEstoque, fornecedor], (error, result) => {
+        const email = req.body.email
+        const cpf = req.body.cpf
+        const telefone = req.body.telefone
+        pool.query('INSERT INTO cliente (nome, email, cpf, telefone) VALUES ($1, $2, $3, $4) RETURNING *', [nome, email, cpf, telefone], (error, result) => {
             if (error) {
                 reject("Ocorreu um erro!", error)
             } else {
@@ -64,30 +64,30 @@ router.post('/', (req, res, next) => {
 
     promise.then(result => {
         const response = {
-            mensagem: "Produto adicionado",
-            produto: result.rows.map(row => {
+            mensagem: "Cliente cadastrado",
+            cliente: result.rows.map(row => {
                 return {
                     id: row.id,
                     nome: row.nome,
-                    valor: row.valor,
-                    emEstoque: row.emEstoque,
-                    fornecedor: row.fornecedor
+                    email: row.email,
+                    cpf: row.cpf,
+                    telefone: row.telefone
                 }
             }),
             request: {
                 tipo: 'POST',
-                descricao: 'Adiciona um produto',
-                url: 'http://localhost:3001/produtos/' + result.rows[0].id
+                descricao: 'Cadastra um cliente',
+                url: 'http://localhost:3001/clientes/' + result.rows[0].id
             }
         }
         res.status(200).send({response})
     }).catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.get('/:id_produto', (req, res, next) => {
+router.get('/:id_cliente', (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
-        const id_produto = req.params.id_produto
-        pool.query('SELECT * FROM produto WHERE id = $1', [id_produto], (error, result) => {
+        const id_cliente = req.params.id_cliente
+        pool.query('SELECT * FROM cliente WHERE id = $1', [id_cliente], (error, result) => {
             if (error) {
                 console.log("erro")
                 reject("Ocorreu um erro!", error)
@@ -100,19 +100,19 @@ router.get('/:id_produto', (req, res, next) => {
 
     promise.then(result => {
         const response = {
-            produto: result.rows.map(row => {
+            cliente: result.rows.map(row => {
                 return {
                     id: row.id,
                     nome: row.nome,
-                    valor: row.valor,
-                    emEstoque: row.emEstoque,
-                    fornecedor: row.fornecedor
+                    email: row.email,
+                    cpf: row.cpf,
+                    telefone: row.telefone
                 }
             }),
             request: {
                 tipo: 'GET',
-                descricao: 'Trás um produto especifico',
-                url: 'http://localhost:3001/produtos/' + result.rows[0].id
+                descricao: 'Trás um cliente especifico',
+                url: 'http://localhost:3001/cliente/' + result.rows[0].id
             }
         }
         res.status(200).send({response})
@@ -122,12 +122,12 @@ router.get('/:id_produto', (req, res, next) => {
 
 router.patch('/', (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
-        const id_produto = req.body.id_produto
+        const id_cliente = req.body.id_cliente
         const nome = req.body.nome
-        const valor = req.body.valor
-        const emEstoque = req.body.emEstoque
-        const fornecedor = req.body.fornecedor
-        pool.query('UPDATE produto SET nome = $1, valor = $2, emEstoque = $3, fornecedor = $4 WHERE id = $5 RETURNING *', [nome, valor, emEstoque, fornecedor, id_produto], (error, result) => {
+        const email = req.body.email
+        const cpf = req.body.cpf
+        const telefone = req.body.telefone
+        pool.query('UPDATE cliente SET nome = $1, email = $2, cpf = $3, telefone = $4 WHERE id = $5 RETURNING *', [nome, email, cpf, telefone, id_cliente], (error, result) => {
             if (error) {
                 console.log(error)
                 reject("Ocorreu um erro!", error)
@@ -138,23 +138,22 @@ router.patch('/', (req, res, next) => {
         })
     })
 
-
     promise.then(result => {
         const response = {
-            mensagem: "Produto alterado",
-            produto: result.rows.map(row => {
+            mensagem: "Cliente alterado",
+            cliente: result.rows.map(row => {
                 return {
                     id: row.id,
                     nome: row.nome,
-                    valor: row.valor,
-                    emEstoque: row.emEstoque,
-                    fornecedor: row.fornecedor
+                    email: row.email,
+                    cpf: row.cpf,
+                    telefone: row.telefone
                 }
             }),
             request: {
                 tipo: 'PATCH',
-                descricao: 'Atualiza um produto',
-                url: 'http://localhost:3001/produtos/' + result.rows[0].id
+                descricao: 'Atualiza um cliente',
+                url: 'http://localhost:3001/clientes/' + result.rows[0].id
             }
         }
         res.status(200).send({response})
