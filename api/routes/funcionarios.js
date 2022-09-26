@@ -1,8 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../postgresql').pool
+const jwt = require("jsonwebtoken");
 
-router.get('/', (req, res, next) => {
+function verifyJWT(req, res, next) {
+    const token = req.headers['x-access-token']
+    if (!token) return res.status(401).send({auth: false, mensagem: 'Token não encontrado'})
+
+    jwt.verify(token, process.env.SECRET, function(error,decoded) {
+        if (error) return res.status(500).send({auth: false, mensagem: 'Falha na autenticação do token'})
+        req.userId = decoded.id
+        next()
+    })
+}
+
+router.get('/',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         pool.query('SELECT * FROM funcionario', [], (error, result) => {
             if (error) {
@@ -42,7 +54,7 @@ router.get('/', (req, res, next) => {
 
 })
 
-router.post('/', (req, res, next) => {
+router.post('/',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const nome = req.body.nome
         const email = req.body.email
@@ -80,7 +92,7 @@ router.post('/', (req, res, next) => {
     }).catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.get('/:id_funcionario', (req, res, next) => {
+router.get('/:id_funcionario',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const id_funcionario = req.params.id_funcionario
         pool.query('SELECT * FROM funcionario WHERE id = $1', [id_funcionario], (error, result) => {
@@ -118,7 +130,7 @@ router.get('/:id_funcionario', (req, res, next) => {
         .catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.patch('/', (req, res, next) => {
+router.patch('/',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const id_funcionario = req.body.id_funcionario
         const nome = req.body.nome

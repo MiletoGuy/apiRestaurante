@@ -1,4 +1,5 @@
-// const jwt = require('jsonwebtoken')
+// const jwt = require("jsonwebtoken");
+//
 // function verifyJWT(req, res, next) {
 //     const token = req.headers['x-access-token']
 //     if (!token) return res.status(401).send({auth: false, mensagem: 'Token não encontrado'})

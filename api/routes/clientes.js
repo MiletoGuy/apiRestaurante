@@ -1,8 +1,8 @@
 const express = require('express')
-const jwt = require("jsonwebtoken");
 const router = express.Router()
 const pool = require('../postgresql').pool
 // const verifyJWT = require('../middleware/authJwt')
+const jwt = require("jsonwebtoken");
 
 function verifyJWT(req, res, next) {
     const token = req.headers['x-access-token']
@@ -53,7 +53,7 @@ router.get('/',verifyJWT, (req, res, next) => {
 
 })
 
-router.post('/', (req, res, next) => {
+router.post('/',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const nome = req.body.nome
         const email = req.body.email
@@ -90,7 +90,7 @@ router.post('/', (req, res, next) => {
     }).catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.get('/:id_cliente', (req, res, next) => {
+router.get('/:id_cliente',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const id_cliente = req.params.id_cliente
         pool.query('SELECT * FROM cliente WHERE id = $1', [id_cliente], (error, result) => {
@@ -126,7 +126,7 @@ router.get('/:id_cliente', (req, res, next) => {
         .catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.patch('/', (req, res, next) => {
+router.patch('/',verifyJWT,  (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const id_cliente = req.body.id_cliente
         const nome = req.body.nome
