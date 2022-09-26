@@ -1,7 +1,5 @@
 const express = require('express')
 const app = express()
-const jwt = require('jsonwebtoken')
-const config = require('./config/auth.config')
 // const model = require('./model')
 const morgan = require('morgan')
 
@@ -11,6 +9,7 @@ const rotaClientes = require('./routes/clientes')
 const rotaUsuarios = require('./routes/usuarios')
 const rotaFornecedores = require('./routes/fornecedores')
 const rotaFuncionarios = require('./routes/funcionarios')
+const rotaLogin = require('./routes/login')
 const bodyParser = require('body-parser')
 
 app.use(morgan('dev'))
@@ -33,6 +32,7 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use('/login', rotaLogin)
 app.use('/produtos', rotaProdutos)
 app.use('/pedidos', rotaPedidos)
 app.use('/clientes', rotaClientes)

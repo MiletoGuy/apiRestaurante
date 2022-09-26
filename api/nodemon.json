@@ -4,6 +4,7 @@
     "POSTGRESQL_PORT": 5432,
     "POSTGRESQL_DATABASE": "restaurante",
     "POSTGRESQL_USER": "gerente",
-    "POSTGRESQL_PASSWORD": "1234"
+    "POSTGRESQL_PASSWORD": "1234",
+    "SECRET": "segredinho"
   }
 }
