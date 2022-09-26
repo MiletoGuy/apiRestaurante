@@ -1,0 +1,3 @@
+ALTER SEQUENCE produto_id_seq RESTART WITH 1;
+ALTER SEQUENCE fornecedor_id_seq RESTART WITH 1;
+ALTER SEQUENCE cliente_id_seq RESTART WITH 1;
