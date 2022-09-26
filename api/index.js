@@ -6,6 +6,9 @@ const morgan = require('morgan')
 const rotaProdutos = require('./routes/produtos')
 const rotaPedidos = require('./routes/pedidos')
 const rotaClientes = require('./routes/clientes')
+const rotaUsuarios = require('./routes/usuarios')
+const rotaFornecedores = require('./routes/fornecedores')
+const rotaFuncionarios = require('./routes/funcionarios')
 const bodyParser = require('body-parser')
 
 app.use(morgan('dev'))
@@ -30,6 +33,9 @@ app.use((req, res, next) => {
 app.use('/produtos', rotaProdutos)
 app.use('/pedidos', rotaPedidos)
 app.use('/clientes', rotaClientes)
+app.use('/usuarios',rotaUsuarios)
+app.use('/fornecedores',rotaFornecedores)
+app.use('/funcionarios',rotaFuncionarios)
 
 app.use((req, res, next) => {
     const erro = new Error('Rota não encontrada')

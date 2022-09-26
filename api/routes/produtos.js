@@ -1,13 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'gerente',
-    host: 'localhost',
-    database: 'restaurante',
-    password: '1234',
-    port: 5432,
-});
+const pool = require('../postgresql').pool
 
 router.get('/', (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
@@ -21,20 +14,21 @@ router.get('/', (req, res, next) => {
             }
         })
     })
+
     promise.then(result => {
         const response = {
             quantidade: result.rowCount,
-            produtos: result.rows.map(prod => {
+            produtos: result.rows.map(row => {
                 return {
-                    id: prod.id,
-                    nome: prod.nome,
-                    valor: prod.valor,
-                    emEstoque: prod.emEstoque,
-                    fornecedor: prod.fornecedor,
+                    id: row.id,
+                    nome: row.nome,
+                    valor: row.valor,
+                    emEstoque: row.emEstoque,
+                    fornecedor: row.fornecedor,
                     request: {
                         tipo: 'GET',
                         descricao: 'Trás todos os produtos',
-                        url: 'http://localhost:3001/produtos/' + prod.id
+                        url: 'http://localhost:3001/produtos/' + row.id
                     }
                 }
             })
