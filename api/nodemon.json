@@ -3,8 +3,8 @@
     "POSTGRESQL_HOST": "localhost",
     "POSTGRESQL_PORT": 5432,
     "POSTGRESQL_DATABASE": "restaurante",
-    "POSTGRESQL_USER": "gerente",
-    "POSTGRESQL_PASSWORD": "1234",
+    "POSTGRESQL_USER": "postgres",
+    "POSTGRESQL_PASSWORD": "admin",
     "SECRET": "segredinho"
   }
 }

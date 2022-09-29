@@ -56,7 +56,7 @@ router.post('/',verifyJWT, (req, res, next) => {
         const usuario = req.body.usuario
         const senha = req.body.senha
 
-        pool.query('INSERT INTO usuario (usuario, senha) VALUES ($1, $2) RETURNING *', [usuario, senha], (error, result) => {
+        pool.query('INSERT INTO usuario (usuario, senha) VALUES ($1, crypt($2,gen_salt($3))) RETURNING *', [usuario, senha,'bf'], (error, result) => {
             if (error) {
                 reject("Ocorreu um erro!", error)
             } else {

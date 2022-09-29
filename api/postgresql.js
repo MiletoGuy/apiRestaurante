@@ -4,7 +4,7 @@ const pool = new Pool({
     port: process.env.POSTGRESQL_PORT,
     database: process.env.POSTGRESQL_DATABASE,
     user: process.env.POSTGRESQL_USER,
-    password: process.env.POSTGRESQL_PASSWORD,
+    password: process.env.POSTGRESQL_PASSWORD
 });
 
 module.exports = {pool}

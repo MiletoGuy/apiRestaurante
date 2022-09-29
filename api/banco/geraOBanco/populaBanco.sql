@@ -5,4 +5,4 @@ INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ('Banana', '2.45
 INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ('Abacaxi', '6.75', 32, 1);
 INSERT INTO pedido (quantidade, id_produto, id_cliente, id_funcionario,estado) VALUES (15, 1, 1, 1, 'ABERTO');
 INSERT INTO pedido (quantidade, id_produto, id_cliente, id_funcionario,estado) VALUES (4, 2, 1, 1, 'ABERTO');
-INSERT INTO usuario (usuario, senha) VALUES ('Tales','123');
+INSERT INTO usuario (usuario, senha) VALUES ('Tales',crypt('123',gen_salt('bf')));
