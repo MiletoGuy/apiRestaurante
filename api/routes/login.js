@@ -7,12 +7,12 @@ router.post('/', (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const usuario = req.body.usuario
         const senha = req.body.senha
+        console.log("usuario e senha=>",usuario,senha)
         pool.query('SELECT * FROM usuario WHERE usuario = $1 AND senha = crypt($2,senha)', [usuario, senha], (error, result) => {
             if (error) {
                 console.log("erro de query")
-                reject("Ocorreu um erro!", error)
+                reject(error)
             } else {
-                console.log("ok")
                 resolve(result)
             }
         })

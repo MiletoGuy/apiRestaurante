@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import LoginForm from "./componentes/LoginForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
     return (
