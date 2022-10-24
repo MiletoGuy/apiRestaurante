@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-// const model = require('./model')
+const cors = require('cors')
 const morgan = require('morgan')
 
 const rotaProdutos = require('./routes/produtos')
@@ -11,7 +11,7 @@ const rotaFornecedores = require('./routes/fornecedores')
 const rotaFuncionarios = require('./routes/funcionarios')
 const rotaLogin = require('./routes/login')
 const bodyParser = require('body-parser')
-
+app.use(cors({origin:true,credentials: true}))
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -31,6 +31,7 @@ app.use((req, res, next) => {
     }
     next()
 })
+
 
 app.use('/login', rotaLogin)
 app.use('/produtos', rotaProdutos)

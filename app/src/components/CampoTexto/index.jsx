@@ -1,5 +1,4 @@
 import * as S from "./styled"
-import {useState} from "react";
 
 const CampoTexto = (props) => {
     return(

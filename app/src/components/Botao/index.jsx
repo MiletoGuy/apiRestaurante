@@ -2,7 +2,7 @@ import * as S from "./styled"
 
 const Botao = (props) => {
     return (
-        <S.Button>{props.children}</S.Button>
+        <S.Button onClick={props.onClick}>{props.children}</S.Button>
     )
 }
 

@@ -18,10 +18,8 @@ router.get('/',verifyJWT, (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         pool.query('SELECT * FROM pedido', [], (error, result) => {
             if (error) {
-                console.log("erro")
                 reject("Ocorreu um erro!", error)
             } else {
-                console.log("ok")
                 resolve(result)
             }
         })
@@ -37,13 +35,14 @@ router.get('/',verifyJWT, (req, res, next) => {
                     id_produto: row.id_produto,
                     id_cliente: row.id_cliente,
                     id_funcionario: row.id_funcionario,
-                    request: {
-                        tipo: 'GET',
-                        descricao: 'Trás todos os pedidos',
-                        url: 'http://localhost:3001/pedidos/' + row.id
-                    }
+                    estado: row.estado
                 }
-            })
+            }),
+            request: {
+                tipo: 'GET',
+                descricao: 'Trás todos os pedidos',
+                url: 'http://localhost:3001/pedidos'
+            }
         }
         res.status(200).send({response})
     })
