@@ -8,14 +8,14 @@ function verifyJWT(req, res, next) {
     const token = req.headers['x-access-token']
     if (!token) return res.status(401).send({auth: false, mensagem: 'Token não encontrado'})
 
-    jwt.verify(token, process.env.SECRET, function(error,decoded) {
+    jwt.verify(token, process.env.SECRET, function (error, decoded) {
         if (error) return res.status(500).send({auth: false, mensagem: 'Falha na autenticação do token'})
         req.userId = decoded.id
         next()
     })
 }
 
-router.get('/',verifyJWT, (req, res, next) => {
+router.get('/', verifyJWT, (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         pool.query('SELECT * FROM cliente', [], (error, result) => {
             if (error) {
@@ -36,14 +36,15 @@ router.get('/',verifyJWT, (req, res, next) => {
                     nome: row.nome,
                     email: row.email,
                     cpf: row.cpf,
-                    telefone: row.telefone,
-                    request: {
-                        tipo: 'GET',
-                        descricao: 'Trás todos os clientes',
-                        url: 'http://localhost:3001/clientes/' + row.id
-                    }
+                    telefone: row.telefone
+
                 }
-            })
+            }),
+            request: {
+                tipo: 'GET',
+                descricao: 'Trás todos os clientes',
+                url: 'http://localhost:3001/clientes'
+            }
         }
         res.status(200).send({response})
     })
@@ -53,7 +54,7 @@ router.get('/',verifyJWT, (req, res, next) => {
 
 })
 
-router.post('/',verifyJWT,  (req, res, next) => {
+router.post('/', verifyJWT, (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const nome = req.body.nome
         const email = req.body.email
@@ -90,7 +91,7 @@ router.post('/',verifyJWT,  (req, res, next) => {
     }).catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.get('/:id_cliente',verifyJWT,  (req, res, next) => {
+router.get('/:id_cliente', verifyJWT, (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const id_cliente = req.params.id_cliente
         pool.query('SELECT * FROM cliente WHERE id = $1', [id_cliente], (error, result) => {
@@ -126,7 +127,7 @@ router.get('/:id_cliente',verifyJWT,  (req, res, next) => {
         .catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
 })
 
-router.patch('/',verifyJWT,  (req, res, next) => {
+router.patch('/', verifyJWT, (req, res, next) => {
     let promise = new Promise(function (resolve, reject) {
         const id_cliente = req.body.id_cliente
         const nome = req.body.nome

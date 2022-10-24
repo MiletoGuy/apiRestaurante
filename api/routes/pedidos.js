@@ -61,7 +61,7 @@ router.post('/',verifyJWT, (req, res, next) => {
         pool.query('INSERT INTO pedido (quantidade, id_produto, id_cliente, id_funcionario,estado) VALUES ($1, $2, $3, $4,$5) RETURNING *', [quantidade, id_produto, id_cliente, id_funcionario,"ABERTO"], (error, result) => {
             if (error) {
                 console.log(error)
-                reject("Ocorreu um erro!", error)
+                reject("Erro de query!", error)
             } else {
                 resolve(result)
             }
@@ -87,7 +87,7 @@ router.post('/',verifyJWT, (req, res, next) => {
             }
         }
         res.status(200).send({response})
-    }).catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
+    }).catch(error => res.status(400).send({error}))
 })
 
 router.get('/:id_pedido',verifyJWT, (req, res, next) => {

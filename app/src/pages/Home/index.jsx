@@ -7,18 +7,30 @@ import Modal from '@mui/material/Modal'
 
 const Home = () => {
     const [pedidos, setPedidos] = useState('')
+    const [clientes, setClientes] = useState('')
+    const [produtos, setProdutos] = useState('')
     const [open, setOpen] = useState(false)
+    const [nomesClientes, setNomesClientes] = useState([])
+    const [nomesProdutos, setNomesProdutos] = useState([])
+    const [produto, setProduto] = useState('')
+    const [quantidade, setQuantidade] = useState('')
+    const [cliente, setCliente] = useState('')
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        alert("Submit formulário")
+    const handleOpen = () => {
+        setOpen(true)
+        setNomesClientes(clientes.map(c => c.nome))
+        setNomesProdutos(produtos.map(c => c.nome))
+    }
+    const handleClose = () => {
+        setOpen(false)
     }
 
     useEffect(() => {
-        getPedidos();
+        getPedidos()
+        getClientes()
+        getProdutos()
     }, [])
+
 
     const getPedidos = () => {
         axios.get('http://localhost:3001/pedidos', {
@@ -29,6 +41,56 @@ const Home = () => {
         )
             .then(res => setPedidos(res.data.response.pedidos))
             .catch(err => console.log(err))
+    }
+
+    const getClientes = () => {
+        axios.get('http://localhost:3001/clientes', {
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem('token')
+                }
+            }
+        )
+            .then(res => setClientes(res.data.response.clientes))
+            .catch(err => console.log(err))
+    }
+
+    const getProdutos = () => {
+        axios.get('http://localhost:3001/produtos', {
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem('token')
+                }
+            }
+        )
+            .then(res => setProdutos(res.data.response.produtos))
+            .catch(err => console.log(err))
+    }
+
+    const handleSubmit = () => {
+        alert("Novo pedido cadastrado\n" +
+            "\nProduto: " + produto +
+            "\nQuantidade: " + quantidade +
+            "\nCliente: " + cliente
+        )
+
+        let prod = produtos.find(p => p.nome === produto)
+        let cli = clientes.find(c => c.nome === cliente)
+
+        axios.post('http://localhost:3001/pedidos',{
+            quantidade: quantidade,
+            id_produto: prod.id,
+            id_cliente: cli.id,
+            id_funcionario: window.sessionStorage.getItem('userId'),
+            estado: 'ABERTO'
+
+        }, {
+            headers: {
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        handleClose()
+        getPedidos()
     }
 
 
@@ -65,25 +127,19 @@ const Home = () => {
         },
     ];
 
-    const produtos = [
-        {label: 'Maça', id: 0},
-        {label: 'Batata', id: 1},
-        {label: 'Abacaxi', id: 2}
-    ]
-
 
     return (
         <S.Container>
             <S.Box>
                 <Input/>
-                <Button variant="outlined" onClick={handleOpen}>Novo Pedido</Button>
+                <Button variant="contained" onClick={handleOpen}>Novo Pedido</Button>
             </S.Box>
             <DataGrid
                 autoHeight={true}
                 rows={pedidos}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 checkboxSelection
                 disableSelectionOnClick
                 experimentalFeatures={{newEditingApi: true}}
@@ -99,10 +155,30 @@ const Home = () => {
                     <S.Form onSubmit={handleSubmit}>
                         <Autocomplete
                             renderInput={(params) => <TextField {...params} label="Produto"/>}
-                            options={produtos} sx={{width: 200}}/>
-                        <TextField label="Quantidade" variant="outlined" required size="normal" type="number"/>
-                        <TextField label="Cliente" variant="outlined" required size="normal"/>
-
+                            options={nomesProdutos} sx={{width: 200}} inputValue={produto}
+                            onChange={(event,newValue) => {
+                                if(newValue) setProduto(newValue)
+                                else setProduto('')
+                            }}
+                            onInputChange={(event, newInputValue) => {
+                                if(newInputValue) setProduto(newInputValue)
+                                else setProduto('')
+                            }}
+                        />
+                        <TextField label="Quantidade" variant="outlined" required size="normal" type="number" onChange={e => setQuantidade(e.target.value)}/>
+                        <Autocomplete
+                            renderInput={(params) => <TextField {...params} label="Cliente"/>}
+                            options={nomesClientes} sx={{width: 200}} inputValue={cliente}
+                            onChange={(event,newValue) => {
+                                if(newValue) setCliente(newValue)
+                                else setCliente('')
+                            }}
+                            onInputChange={(event, newInputValue) => {
+                                if(newInputValue) setCliente(newInputValue)
+                                else setCliente('')
+                            }}
+                        />
+                        <Button variant="contained" onClick={handleSubmit}>Confirmar</Button>
                     </S.Form>
                 </S.Modal>
             </Modal>
