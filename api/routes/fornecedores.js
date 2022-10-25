@@ -20,7 +20,6 @@ router.get('/',verifyJWT,  (req, res, next) => {
                 console.log("erro")
                 reject("Ocorreu um erro!", error)
             } else {
-                console.log("ok")
                 resolve(result)
             }
         })
@@ -94,9 +93,8 @@ router.get('/:id_fornecedor',verifyJWT,  (req, res, next) => {
         pool.query('SELECT * FROM fornecedor WHERE id = $1', [id_fornecedor], (error, result) => {
             if (error) {
                 console.log("erro")
-                reject("Ocorreu um erro!", error)
+                reject("Erro de query", error)
             } else {
-                console.log("ok")
                 resolve(result)
             }
         })
@@ -121,7 +119,7 @@ router.get('/:id_fornecedor',verifyJWT,  (req, res, next) => {
         }
         res.status(200).send({response})
     })
-        .catch(error => res.status(400).send({mensagem: "ocorreu um erro", error}))
+        .catch(error => res.status(400).send({error}))
 })
 
 router.patch('/',verifyJWT,  (req, res, next) => {

@@ -35,7 +35,7 @@ router.get('/', verifyJWT, (req, res, next) => {
                     id: row.id,
                     nome: row.nome,
                     valor: row.valor,
-                    emEstoque: row.emEstoque,
+                    emEstoque: row.emestoque,
                     fornecedor: row.fornecedor,
                     request: {
                         tipo: 'GET',
@@ -61,7 +61,8 @@ router.post('/',verifyJWT, (req, res, next) => {
         const fornecedor = req.body.fornecedor
         pool.query('INSERT INTO produto (nome, valor, emEstoque, fornecedor) VALUES ($1, $2, $3, $4) RETURNING *', [nome, valor, emEstoque, fornecedor], (error, result) => {
             if (error) {
-                reject("Ocorreu um erro!", error)
+                reject("Erro de query!", error)
+                console.log(error)
             } else {
                 resolve(result)
             }

@@ -22,7 +22,6 @@ const LoginForm = () => {
                 else alert('Login Inválido')
             })
             .catch(err => console.log(err))
-
         setSenha('')
         setNome('')
     }
