@@ -22,7 +22,6 @@ router.get('/', verifyJWT, (req, res, next) => {
                 console.log("erro")
                 reject("Ocorreu um erro!", error)
             } else {
-                console.log("ok")
                 resolve(result)
             }
         })

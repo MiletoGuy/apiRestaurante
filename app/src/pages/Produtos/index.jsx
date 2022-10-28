@@ -122,7 +122,6 @@ const Pedidos = () => {
                 columns={columns}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
-                checkboxSelection
                 disableSelectionOnClick
                 experimentalFeatures={{newEditingApi: true}}
             />
