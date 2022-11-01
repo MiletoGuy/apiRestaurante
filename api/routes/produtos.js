@@ -135,10 +135,8 @@ router.patch('/',verifyJWT, (req, res, next) => {
         const fornecedor = req.body.fornecedor
         pool.query('UPDATE produto SET nome = $1, valor = $2, emEstoque = $3, fornecedor = $4 WHERE id = $5 RETURNING *', [nome, valor, emEstoque, fornecedor, id_produto], (error, result) => {
             if (error) {
-                console.log(error)
-                reject("Ocorreu um erro!", error)
+                reject("Erro de query!", error)
             } else {
-                console.log("ok")
                 resolve(result)
             }
         })

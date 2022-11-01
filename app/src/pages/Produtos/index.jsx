@@ -61,7 +61,7 @@ const Pedidos = () => {
 
         let frn = fornecedores.find(c => c.nome === fornecedor)
 
-        axios.post('http://localhost:3001/produtos',{
+        axios.post('http://localhost:3001/produtos', {
             nome: produto,
             valor: valor,
             emEstoque: 0,
@@ -77,6 +77,43 @@ const Pedidos = () => {
         document.location.reload()
     }
 
+    const addEstoque = (id_produto) => {
+        let prod = produtos.find(p => p.id === id_produto)
+        let e = parseInt(prompt("Digite a quantidade a ser adicionado"))
+        let novoEstoque = prod.emEstoque + e
+
+        axios.patch('http://localhost:3001/produtos', {
+            id_produto: id_produto,
+            nome: prod.nome,
+            valor: prod.valor,
+            emEstoque: novoEstoque,
+            fornecedor: prod.fornecedor
+
+        }, {
+            headers: {
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        getProdutos()
+        document.location.reload()
+    }
+
+    const renderDetailsButton = (params) => {
+        return (
+            <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={() => {
+                    addEstoque(params.row.id)
+                }}
+            >
+                Adicionar Estoque
+            </Button>
+        )
+    }
 
     const columns = [
         {field: 'id', headerName: 'ID', width: 90},
@@ -102,6 +139,13 @@ const Pedidos = () => {
             headerName: 'Fornecedor',
             type: 'number',
             width: 110,
+        },
+        {
+            field: 'op',
+            headerName: '',
+            width: 180,
+            renderCell: renderDetailsButton,
+            disableClickEventBubbling: true,
         }
     ];
 
@@ -111,7 +155,8 @@ const Pedidos = () => {
 
     return (
         <S.Container>
-            <Button variant="contained" onClick={navHome} sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
+            <Button variant="contained" onClick={navHome}
+                    sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
             <S.Box>
                 <Input/>
                 <Button variant="contained" onClick={handleOpen}>Novo Produto</Button>
@@ -134,17 +179,19 @@ const Pedidos = () => {
                 <S.Modal>
                     <S.Titulo>Cadastro de Produtos</S.Titulo>
                     <S.Form onSubmit={handleSubmit}>
-                        <TextField label="Nome do Produto" variant="outlined" required size="normal" onChange={e => setProduto(e.target.value)}/>
-                        <TextField label="Valor" variant="outlined" required size="normal" type="number" onChange={e => setValor(e.target.value)}/>
+                        <TextField label="Nome do Produto" variant="outlined" required size="normal"
+                                   onChange={e => setProduto(e.target.value)}/>
+                        <TextField label="Valor" variant="outlined" required size="normal" type="number"
+                                   onChange={e => setValor(e.target.value)}/>
                         <Autocomplete
                             renderInput={(params) => <TextField {...params} label="Fornecedor"/>}
                             options={nomesFornecedores} sx={{width: 300}} inputValue={fornecedor}
-                            onChange={(event,newValue) => {
-                                if(newValue) setFornecedor(newValue)
+                            onChange={(event, newValue) => {
+                                if (newValue) setFornecedor(newValue)
                                 else setFornecedor('')
                             }}
                             onInputChange={(event, newInputValue) => {
-                                if(newInputValue) setFornecedor(newInputValue)
+                                if (newInputValue) setFornecedor(newInputValue)
                                 else setFornecedor('')
                             }}
                         />

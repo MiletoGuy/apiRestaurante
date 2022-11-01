@@ -194,7 +194,7 @@ const Pedidos = () => {
             width: 150,
             renderCell: renderDetailsButton,
             disableClickEventBubbling: true,
-        },
+        }
     ];
 
     const navHome = () => {
