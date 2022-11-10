@@ -32,6 +32,11 @@ const Home = () => {
         navigate('/funcionarios')
     }
 
+    const sair = () => {
+        window.sessionStorage.clear()
+        navigate('/')
+    }
+
     return (
         <S.Container>
             <Button onClick={navPedidos} variant="contained" sx={{marginBottom: 1}}>Pedidos</Button>
@@ -39,6 +44,7 @@ const Home = () => {
             <Button onClick={navClientes} variant="contained" sx={{marginBottom: 1}}>Clientes</Button>
             <Button onClick={navFornecedores} variant="contained" sx={{marginBottom: 1}}>Fornecedores</Button>
             <Button onClick={navFuncionarios} variant="contained" sx={{marginBottom: 1}}>Funcionarios</Button>
+            <Button onClick={sair} color={"error"} variant="contained" sx={{marginBottom: 1}}>sair</Button>
         </S.Container>
     )
 }
