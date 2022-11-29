@@ -203,10 +203,11 @@ const Pedidos = () => {
 
     return (
         <S.Container>
+            <S.Titulo>Pedidos</S.Titulo>
             <Button variant="contained" onClick={navHome}
                     sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
             <S.Box>
-                <Input/>
+                <Input placeholder="Filtro"/>
                 <Button variant="contained" onClick={handleOpen}>Novo Pedido</Button>
             </S.Box>
             <DataGrid
@@ -225,7 +226,7 @@ const Pedidos = () => {
                 aria-describedby="modal-modal-description"
             >
                 <S.Modal>
-                    <S.Titulo>Cadastro de pedido</S.Titulo>
+                    <S.TituloModal>Cadastro de pedido</S.TituloModal>
                     <S.Form onSubmit={handleSubmit}>
                         <Autocomplete
                             renderInput={(params) => <TextField {...params} label="Produto"/>}
