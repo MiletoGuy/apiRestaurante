@@ -39,12 +39,12 @@ const Home = () => {
 
     return (
         <S.Container>
-            <Button onClick={navPedidos} variant="contained" sx={{marginBottom: 1}}>Pedidos</Button>
-            <Button onClick={navProdutos} variant="contained" sx={{marginBottom: 1}}>Produtos</Button>
-            <Button onClick={navClientes} variant="contained" sx={{marginBottom: 1}}>Clientes</Button>
-            <Button onClick={navFornecedores} variant="contained" sx={{marginBottom: 1}}>Fornecedores</Button>
-            <Button onClick={navFuncionarios} variant="contained" sx={{marginBottom: 1}}>Funcionarios</Button>
-            <Button onClick={sair} color={"error"} variant="contained" sx={{marginBottom: 1}}>sair</Button>
+            <Button onClick={navPedidos} variant="outlined" sx={{marginBottom: 1}}>Pedidos</Button>
+            <Button onClick={navProdutos} variant="outlined" sx={{marginBottom: 1}}>Produtos</Button>
+            <Button onClick={navClientes} variant="outlined" sx={{marginBottom: 1}}>Clientes</Button>
+            <Button onClick={navFornecedores} variant="outlined" sx={{marginBottom: 1}}>Fornecedores</Button>
+            <Button onClick={navFuncionarios} variant="outlined" sx={{marginBottom: 1}}>Funcionarios</Button>
+            <Button onClick={sair} variant="outlined" sx={{marginBottom: 1}}>sair</Button>
         </S.Container>
     )
 }

@@ -2,9 +2,9 @@ import styled from "styled-components"
 
 export const Container = styled.section`
   display: flex;
+  background-color: #efefef;
   flex-direction: column;
   justify-content: center;
-  margin: 80px 0;
 `
 
 export const Box = styled.section`
@@ -27,7 +27,7 @@ export const Modal = styled.section`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #FFF;
+  background-color: #efefef;
   border: #000 double 2px;
   border-radius: 5px;
 `

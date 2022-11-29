@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/api/banco/geraOBanco/criaTabelasCmd.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/api/banco/geraOBanco/populaBanco.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/api/banco/geraOBanco/recriaBanco.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/api/banco/produto.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/api/banco/teste.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/api/routes/produtos.js" dialect="PostgreSQL" />
     <file url="PROJECT" dialect="PostgreSQL" />
   </component>

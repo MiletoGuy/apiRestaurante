@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import * as S from './styled'
 import {DataGrid} from '@mui/x-data-grid'
-import {Button, Input, TextField} from "@mui/material"
+import {Button, TextField} from "@mui/material"
 import axios from 'axios'
 import Modal from '@mui/material/Modal'
 import {useNavigate} from "react-router-dom";
@@ -66,12 +66,12 @@ const Funcionarios = () => {
         {field: 'id', headerName: 'ID', width: 90},
         {
             field: 'nome',
-            headerName: 'Nome',
+            headerName: 'NOME',
             width: 150,
         },
         {
             field: 'email',
-            headerName: 'Email',
+            headerName: 'EMAIL',
             width: 250,
         },
         {
@@ -81,17 +81,17 @@ const Funcionarios = () => {
         },
         {
             field: 'telefone',
-            headerName: 'Telefone',
+            headerName: 'TELEFONE',
             width: 160,
         },
         {
             field: 'entrada',
-            headerName: 'Entrada',
+            headerName: 'ENTRADA',
             width: 200,
         },
         {
             field: 'saida',
-            headerName: 'Saída',
+            headerName: 'SAÍDA',
             width: 200,
         }
     ];
@@ -102,10 +102,11 @@ const Funcionarios = () => {
 
     return (
         <S.Container>
-            <Button variant="contained" onClick={navHome} sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
             <S.Box>
-                <Input/>
-                <Button variant="contained" onClick={handleOpen}>Novo Funcionário</Button>
+                <Button variant="outlined" onClick={navHome}
+                        sx={{width: 100}}>Home</Button>
+                <Button variant="outlined" onClick={handleOpen}
+                        sx={{width: 190}}>Novo Funcionário</Button>
             </S.Box>
             <DataGrid
                 autoHeight={true}
@@ -129,7 +130,7 @@ const Funcionarios = () => {
                         <TextField label="Email" variant="outlined" required size="normal" onChange={e => setEmail(e.target.value)}/>
                         <TextField label="CPF" variant="outlined" type="number" required size="normal" onChange={e => setCpf(e.target.value)}/>
                         <TextField label="Telefone" variant="outlined" type="number" required size="normal" onChange={e => setTelefone(e.target.value)}/>
-                        <Button variant="contained" onClick={handleSubmit}>Confirmar</Button>
+                        <Button variant="outlined" onClick={handleSubmit}>Confirmar</Button>
                     </S.Form>
                 </S.Modal>
             </Modal>

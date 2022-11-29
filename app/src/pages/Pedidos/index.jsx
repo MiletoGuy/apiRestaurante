@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import * as S from './styled'
 import {DataGrid} from '@mui/x-data-grid'
-import {Autocomplete, Button, Input, TextField} from "@mui/material"
+import {Autocomplete, Button, TextField} from "@mui/material"
 import axios from 'axios'
 import Modal from '@mui/material/Modal'
 import {useNavigate} from "react-router-dom";
@@ -71,9 +71,9 @@ const Pedidos = () => {
         let prod = produtos.find(p => p.nome === produto)
         let cli = clientes.find(c => c.nome === cliente)
         let novoEstoque = parseInt(prod.emEstoque - quantidade)
-        if(prod.emEstoque >= quantidade){
+        if (prod.emEstoque >= quantidade) {
 
-            axios.patch('http://localhost:3001/produtos',{
+            axios.patch('http://localhost:3001/produtos', {
                 id_produto: prod.id,
                 nome: prod.nome,
                 valor: prod.valor,
@@ -140,7 +140,7 @@ const Pedidos = () => {
     }
 
     const renderDetailsButton = (params) => {
-        if(params.row.estado === "ABERTO"){
+        if (params.row.estado === "ABERTO") {
             return (
                 <Button
                     variant="outlined"
@@ -162,30 +162,30 @@ const Pedidos = () => {
         {
             field: 'quantidade',
             type: 'number',
-            headerName: 'Quantidade',
+            headerName: 'QUANTIDADE',
             width: 150,
         },
         {
             field: 'id_produto',
             type: 'number',
-            headerName: 'Produto',
+            headerName: 'PRODUTO',
             width: 150,
         },
         {
             field: 'id_cliente',
-            headerName: 'Cliente',
+            headerName: 'CLIENTE',
             type: 'number',
             width: 110,
         },
         {
             field: 'id_funcionario',
-            headerName: 'Funcionario',
+            headerName: 'FUNCIONÁRIO',
             type: 'number',
             width: 160,
         },
         {
             field: 'estado',
-            headerName: 'Estado',
+            headerName: 'SITUAÇÃO',
             width: 160,
         },
         {
@@ -203,11 +203,11 @@ const Pedidos = () => {
 
     return (
         <S.Container>
-            <Button variant="contained" onClick={navHome}
-                    sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
             <S.Box>
-                <Input/>
-                <Button variant="contained" onClick={handleOpen}>Novo Pedido</Button>
+                <Button variant="outlined" onClick={navHome}
+                        sx={{width: 100}}>Home</Button>
+                <Button variant="outlined" onClick={handleOpen}
+                        sx={{width: 150}}>Novo Pedido</Button>
             </S.Box>
             <DataGrid
                 autoHeight={true}
@@ -253,7 +253,7 @@ const Pedidos = () => {
                                 else setCliente('')
                             }}
                         />
-                        <Button variant="contained" onClick={handleSubmit}>Confirmar</Button>
+                        <Button variant="outlined" onClick={handleSubmit}>Confirmar</Button>
                     </S.Form>
                 </S.Modal>
             </Modal>
