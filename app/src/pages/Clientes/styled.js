@@ -4,7 +4,6 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 80px 0;
 `
 
 export const Box = styled.section`
@@ -32,10 +31,16 @@ export const Modal = styled.section`
   border-radius: 5px;
 `
 
-export const Titulo = styled.label`
+export const TituloModal = styled.label`
   width: 100%;
   text-align: center;
   border-bottom: gray solid 1px;
+`
+
+export const Titulo = styled.label`
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
 `
 
 export const Form = styled.form`

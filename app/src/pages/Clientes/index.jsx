@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react"
 import * as S from './styled'
 import {DataGrid} from '@mui/x-data-grid'
-import {Button, Input, TextField} from "@mui/material"
+import {Button, IconButton, Input, TextField} from "@mui/material"
 import axios from 'axios'
 import Modal from '@mui/material/Modal'
 import {useNavigate} from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 
 const Clientes = () => {
     const [clientes, setClientes] = useState('')
@@ -93,7 +94,10 @@ const Clientes = () => {
 
     return (
         <S.Container>
-            <Button variant="contained" onClick={navHome} sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
+            <S.Titulo>Clientes</S.Titulo>
+            <IconButton onClick={navHome} size="small" sx={{width: 50}}>
+                <HomeIcon color="primary"/>
+            </IconButton>
             <S.Box>
                 <Input/>
                 <Button variant="contained" onClick={handleOpen}>Novo Cliente</Button>
@@ -114,7 +118,7 @@ const Clientes = () => {
                 aria-describedby="modal-modal-description"
             >
                 <S.Modal>
-                    <S.Titulo>Cadastro de Cliente</S.Titulo>
+                    <S.TituloModal>Cadastro de Cliente</S.TituloModal>
                     <S.Form onSubmit={handleSubmit}>
                         <TextField label="Nome do Cliente" variant="outlined" required size="normal" onChange={e => setCliente(e.target.value)}/>
                         <TextField label="Email" variant="outlined" required size="normal" onChange={e => setEmail(e.target.value)}/>

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react"
 import * as S from './styled'
 import {DataGrid} from '@mui/x-data-grid'
-import {Autocomplete, Button, Input, TextField} from "@mui/material"
+import {Autocomplete, Button, IconButton, Input, TextField} from "@mui/material"
 import axios from 'axios'
 import Modal from '@mui/material/Modal'
 import {useNavigate} from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 
 const Pedidos = () => {
     const [produtos, setProdutos] = useState('')
@@ -155,8 +156,10 @@ const Pedidos = () => {
 
     return (
         <S.Container>
-            <Button variant="contained" onClick={navHome}
-                    sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
+            <S.Titulo>Produtos</S.Titulo>
+            <IconButton onClick={navHome} size="small" sx={{width: 50}}>
+                <HomeIcon color="primary"/>
+            </IconButton>
             <S.Box>
                 <Input/>
                 <Button variant="contained" onClick={handleOpen}>Novo Produto</Button>
@@ -177,7 +180,7 @@ const Pedidos = () => {
                 aria-describedby="modal-modal-description"
             >
                 <S.Modal>
-                    <S.Titulo>Cadastro de Produtos</S.Titulo>
+                    <S.TituloModal>Cadastro de Produtos</S.TituloModal>
                     <S.Form onSubmit={handleSubmit}>
                         <TextField label="Nome do Produto" variant="outlined" required size="normal"
                                    onChange={e => setProduto(e.target.value)}/>

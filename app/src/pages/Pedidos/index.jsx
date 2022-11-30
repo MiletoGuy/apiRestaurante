@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react"
 import * as S from './styled'
 import {DataGrid} from '@mui/x-data-grid'
-import {Autocomplete, Button, Input, TextField} from "@mui/material"
+import {Autocomplete, Button, IconButton, Input, TextField} from "@mui/material"
 import axios from 'axios'
 import Modal from '@mui/material/Modal'
 import {useNavigate} from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const Pedidos = () => {
     const [pedidos, setPedidos] = useState('')
@@ -71,9 +72,9 @@ const Pedidos = () => {
         let prod = produtos.find(p => p.nome === produto)
         let cli = clientes.find(c => c.nome === cliente)
         let novoEstoque = parseInt(prod.emEstoque - quantidade)
-        if(prod.emEstoque >= quantidade){
+        if (prod.emEstoque >= quantidade) {
 
-            axios.patch('http://localhost:3001/produtos',{
+            axios.patch('http://localhost:3001/produtos', {
                 id_produto: prod.id,
                 nome: prod.nome,
                 valor: prod.valor,
@@ -140,7 +141,7 @@ const Pedidos = () => {
     }
 
     const renderDetailsButton = (params) => {
-        if(params.row.estado === "ABERTO"){
+        if (params.row.estado === "ABERTO") {
             return (
                 <Button
                     variant="outlined"
@@ -204,8 +205,9 @@ const Pedidos = () => {
     return (
         <S.Container>
             <S.Titulo>Pedidos</S.Titulo>
-            <Button variant="contained" onClick={navHome}
-                    sx={{width: 100, marginLeft: 1, marginBottom: 1}}>Home</Button>
+            <IconButton onClick={navHome} size="small" sx={{width: 50}}>
+                <HomeIcon color="primary"/>
+            </IconButton>
             <S.Box>
                 <Input placeholder="Filtro"/>
                 <Button variant="contained" onClick={handleOpen}>Novo Pedido</Button>
